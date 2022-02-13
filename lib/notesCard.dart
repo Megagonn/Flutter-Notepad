@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notepad/input.dart';
 import 'tabbar.dart';
 
 class NotesCard extends StatefulWidget {
@@ -7,6 +8,8 @@ class NotesCard extends StatefulWidget {
   @override
   _NotesCardState createState() => _NotesCardState();
 }
+
+var myNoteContent;
 
 class _NotesCardState extends State<NotesCard> {
   @override
@@ -23,12 +26,52 @@ class _NotesCardState extends State<NotesCard> {
             return Column(
               children: [
                 ListTile(
-                  title: Text(
-                    noteList[index],
-                    style: TextStyle(color: Colors.deepOrangeAccent),
+                  leading: TextButton(
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    child: Icon(
+                      Icons.edit_rounded,
+                    ),
+                  ),
+                  title: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            noteList[index][0],
+                            style: TextStyle(color: Colors.grey.shade800),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text('${noteList[index][1]}'),
+                        ],
+                      ),
+                    ],
+                  ),
+                  trailing: TextButton(
+                    onPressed: () {
+                      setState(() {
+                        // noteList.remove(index);
+                        // print(noteList);
+                        // noteList.removeWhere((element) => index);
+                      });
+                    },
+                    child: Icon(
+                      Icons.delete_forever_rounded,
+                    ),
                   ),
                   focusColor: (Colors.blueAccent),
-                  tileColor: Colors.blueGrey.shade200,
+                  tileColor: Colors.blue.shade100,
+                  onTap: () {
+                    myNoteContent = noteList[index][0];
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => NoteContent()));
+                  },
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
@@ -37,6 +80,31 @@ class _NotesCardState extends State<NotesCard> {
               ],
             );
           }),
+    );
+  }
+}
+
+class NoteContent extends StatelessWidget {
+  const NoteContent({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('My Note'),
+      ),
+      body: SafeArea(
+          child: Container(
+        padding: EdgeInsets.all(8.0),
+        child: Text(
+          '$myNoteContent',
+          style: TextStyle(
+            fontSize: 18,
+            letterSpacing: 1.5,
+            wordSpacing: 2.0,
+          ),
+        ),
+      )),
     );
   }
 }

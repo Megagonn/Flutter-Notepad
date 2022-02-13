@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'hero.dart';
 import 'ui.dart';
 
 void main() {
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
           title: Text('NotePad'),
         ),
         body: SafeArea(
-          child: UI(),
+          child: Heroy(),
         ),
       ),
     );

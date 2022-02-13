@@ -4,8 +4,8 @@ import 'package:notepad/input.dart';
 import 'colors.dart';
 import 'notesCard.dart';
 
-
 List noteList = [];
+
 class Tabbar extends StatefulWidget {
   const Tabbar({Key? key}) : super(key: key);
 
@@ -83,8 +83,11 @@ class _TabbarState extends State<Tabbar> with TickerProviderStateMixin {
                         onPressed: () {
                           setState(() {
                             if (!note.contains(RegExp(r'[A-Z]'))) {
-                              noteList.add(note);
+                              noteList.add([note, date]);
+                              // print(noteList[0]);
+                              myController.clear();
                             }
+
                             // myNote();
                           });
                         },

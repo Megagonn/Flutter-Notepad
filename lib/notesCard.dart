@@ -28,10 +28,12 @@ class _NotesCardState extends State<NotesCard> {
                 ListTile(
                   leading: TextButton(
                     onPressed: () {
-                      setState(() {});
+                      setState(() {
+                        
+                      });
                     },
                     child: Icon(
-                      Icons.edit_rounded,
+                      Icons.edit_rounded, semanticLabel: 'Edit',
                     ),
                   ),
                   title: Column(
@@ -56,9 +58,7 @@ class _NotesCardState extends State<NotesCard> {
                   trailing: TextButton(
                     onPressed: () {
                       setState(() {
-                        // noteList.remove(index);
-                        // print(noteList);
-                        // noteList.removeWhere((element) => index);
+                        noteList.removeAt(index);
                       });
                     },
                     child: Icon(

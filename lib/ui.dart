@@ -10,6 +10,9 @@ class UI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('NotePad'),
+      ),
       body: SafeArea(
         child: Container(
           child: Column(

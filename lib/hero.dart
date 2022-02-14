@@ -30,6 +30,7 @@ class _HeroyState extends State<Heroy> {
                 nick = val;
               });
             },
+            decoration: InputDecoration(hintText: 'Choose a nick...'),
           ),
           SizedBox(
             height: 5,  

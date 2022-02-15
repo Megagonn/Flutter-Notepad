@@ -19,7 +19,7 @@ class _HeroyState extends State<Heroy> {
         // height: MediaQuery.of(context).size.height/2,
         child: Column(children: [
           Image.asset(
-            'images/female-avatar.jfif',
+            'images/this.jpg',
             repeat: ImageRepeat.noRepeat,
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height / 1.4,
@@ -33,13 +33,15 @@ class _HeroyState extends State<Heroy> {
             decoration: InputDecoration(hintText: 'Choose a nick...'),
           ),
           SizedBox(
-            height: 5,  
+            height: 5,
             child: Text(''),
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => UI()));
+                context,
+                MaterialPageRoute(builder: (context) => UI()),
+              );
             },
             child: Text(
               'Get started',

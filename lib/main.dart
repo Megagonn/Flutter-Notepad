@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Note Pad',
       theme: ThemeData(
-        // primarySwatch: MaterialColor(pink, pink),
+        primaryColor: pink,
       ),
       home: Scaffold(
         appBar: AppBar(

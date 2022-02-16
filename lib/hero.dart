@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notepad/colors.dart';
 import 'package:notepad/ui.dart';
 
 class Heroy extends StatefulWidget {
@@ -29,8 +30,12 @@ class _HeroyState extends State<Heroy> {
               setState(() {
                 nick = val;
               });
-            },
-            decoration: InputDecoration(hintText: 'Choose a nick...'),
+            },cursorColor: pink,
+            decoration: InputDecoration(
+              hintText: 'Choose a nick...',
+              focusedBorder:
+                  UnderlineInputBorder(borderSide: BorderSide(color: pink)),
+            ),
           ),
           SizedBox(
             height: 5,
@@ -46,6 +51,7 @@ class _HeroyState extends State<Heroy> {
             child: Text(
               'Get started',
             ),
+            style: ButtonStyle(backgroundColor: MaterialStateProperty.all(pink),),
           )
         ]),
       ),

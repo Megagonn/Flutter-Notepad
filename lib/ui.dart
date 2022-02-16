@@ -24,7 +24,7 @@ class UI extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Expanded(child: Text('Hey $nick,\nGood day')),
+                    Expanded(child: Text('Hey $nick,\nGood day', style: TextStyle( fontFamily: 'GideonRoman'),),),
                     Expanded(
                       child: CircleAvatar(
                         child: Image.asset('images/avatar.jfif'),
@@ -51,12 +51,15 @@ class UI extends StatelessWidget {
                       child: TextField(
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                          
                           labelText: 'Search',
                           labelStyle: TextStyle(
                             color: grey,
                           ),
-                          suffixIcon: Icon(Icons.search_sharp),
+                          suffixIcon: Icon(Icons.search_sharp, color: pink,),
+                          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: pink)),
                         ),
+                        cursorColor: pink,
                         onChanged: (val) {
                           // for (var i = 0; i < noteList.length; i++) {
                           //     if (noteList[i][0].contains('$val')) {

@@ -34,6 +34,7 @@ class _TabbarState extends State<Tabbar> with TickerProviderStateMixin {
     return Column(
       children: [
         TabBar(
+          indicatorColor: pink,
           controller: tabController,
           tabs: [
             Tab(

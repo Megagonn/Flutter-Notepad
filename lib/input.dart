@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notepad/colors.dart';
 
 String note = '';
 DateTime? date;
@@ -18,7 +19,7 @@ class _InputState extends State<Input> {
   Widget build(BuildContext context) {
     return TextField(
         controller: myController,
-        cursorColor: Colors.blue.shade200,
+        cursorColor: pink,
         cursorHeight: 3.0,
         onChanged: (String text) {
           setState(() {
@@ -28,6 +29,7 @@ class _InputState extends State<Input> {
             // print(note);
           });
         },
+        
 
         // onTap: () {
         //   setState(() {
@@ -37,10 +39,14 @@ class _InputState extends State<Input> {
         textAlign: TextAlign.justify,
         maxLines: 15,
         decoration: InputDecoration(
+          
           hintText: 'Add note...',
           hintStyle: TextStyle(
-            color: Colors.grey,
+            color: pink,
           ),
+          focusColor: pink,
+          filled: true,
+          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: pink,)),
         ));
   }
 }

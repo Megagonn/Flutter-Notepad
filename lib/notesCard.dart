@@ -12,6 +12,7 @@ class NotesCard extends StatefulWidget {
 
 String? myNoteContent;
 var ind;
+
 class _NotesCardState extends State<NotesCard> {
   @override
   Widget build(BuildContext context) {
@@ -30,11 +31,15 @@ class _NotesCardState extends State<NotesCard> {
                 ListTile(
                   leading: TextButton(
                     onPressed: () {
-                      setState(() {});
+                      setState(() {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Edit()));
+                      });
                     },
                     child: Icon(
                       Icons.edit_rounded,
                       semanticLabel: 'Edit',
+                      color: pink2,
                     ),
                   ),
                   title: Column(
@@ -64,10 +69,11 @@ class _NotesCardState extends State<NotesCard> {
                     },
                     child: Icon(
                       Icons.delete_forever_rounded,
+                      color: pink2,
                     ),
                   ),
-                  focusColor: (Colors.blueAccent),
-                  tileColor: Colors.blue.shade100,
+                  focusColor: (Colors.pink.shade500),
+                  tileColor: Colors.pink.shade100,
                   onTap: () {
                     myNoteContent = noteList[index][0];
                     Navigator.push(context,
@@ -85,12 +91,75 @@ class _NotesCardState extends State<NotesCard> {
   }
 }
 
+class Edit extends StatefulWidget {
+  @override
+  _EditState createState() => _EditState();
+}
+
+class _EditState extends State<Edit> {
+  TextEditingController thisControl = TextEditingController();
+  var edited;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    thisControl.text = noteList[ind][0];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            noteList.removeAt(ind);
+            noteList.insert(ind, [edited, date]);
+            thisControl.clear();
+            Navigator.pop(context);
+          });
+        },
+        backgroundColor: pink,
+        child: Icon(
+          Icons.send_sharp,
+          // color: pink,
+        ),
+      ),
+      appBar: AppBar(
+        backgroundColor: pink,
+        title: Text('Edit Note'),
+      ),
+      body: Column(children: [
+        TextField(
+          controller: thisControl,
+          cursorColor: pink,
+          maxLines: 20,
+          decoration: InputDecoration(
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: pink),
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 5,
+                vertical: 5,
+              )),
+          onChanged: (val) {
+            setState(() {
+              edited = val;
+            });
+          },
+        ),
+        // ElevatedButton(onPressed: (){}, child: )
+      ]),
+    );
+  }
+}
+
+//this func clipped the note on the listTile
 String clipedNote() {
   if (noteList[ind][0].length >= 35) {
-    return noteList[ind][0].substring(0, 35)+"...";
+    return noteList[ind][0].substring(0, 35) + "...";
   } else {
     return noteList[ind][0];
-  }  
+  }
 }
 
 class NoteContent extends StatelessWidget {
@@ -106,17 +175,15 @@ class NoteContent extends StatelessWidget {
       body: SafeArea(
           child: Container(
         padding: EdgeInsets.all(8.0),
-        child: ClipRect(
-          clipBehavior: Clip.hardEdge,
-          child: Text(
-            '$myNoteContent',
-            // softWrap: true,
-            // textWidthBasis: TextWidthBasis.parent,
-            style: TextStyle(
-              fontSize: 18,
-              letterSpacing: 1.5,
-              wordSpacing: 2.0,
-            ),
+        child: Text(
+          '$myNoteContent',
+          // softWrap: true,
+          // textWidthBasis: TextWidthBasis.parent,
+          style: TextStyle(
+            fontSize: 18,
+            letterSpacing: 1.5,
+            wordSpacing: 2.0,
+            color: grey,
           ),
         ),
       )),

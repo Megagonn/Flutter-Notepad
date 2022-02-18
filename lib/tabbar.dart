@@ -16,6 +16,17 @@ class Tabbar extends StatefulWidget {
 class _TabbarState extends State<Tabbar> with TickerProviderStateMixin {
   late TabController tabController;
   late int myIndex;
+
+  //addition notification
+  alertAddition(context) {
+    return ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('One note is added'),
+        duration: Duration(seconds: 3),
+      ),
+    );
+  }
+
   // var mYkey = GlobalKey();
   @override
   void initState() {
@@ -71,7 +82,7 @@ class _TabbarState extends State<Tabbar> with TickerProviderStateMixin {
                   onPressed: () {
                     setState(() {
                       myIndex = 1;
-                      DefaultTabController.of(context)?.animateTo(1);
+                      // DefaultTabController.of(context)?.animateTo(1);
                     });
                   },
                   backgroundColor: pink,
@@ -97,13 +108,9 @@ class _TabbarState extends State<Tabbar> with TickerProviderStateMixin {
                   key: ValueKey(2),
                   onPressed: () {
                     setState(() {
-                      // if (!note.contains(RegExp(r'[A-Z]'))) {
                       noteList.add([note, date]);
-                      // print(noteList[0]);
                       myController.clear();
-                      // }
-
-                      // myNote();
+                      alertAddition(context);
                     });
                   },
                   backgroundColor: pink,
@@ -119,23 +126,6 @@ class _TabbarState extends State<Tabbar> with TickerProviderStateMixin {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Input(),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height / 17,
-                        ),
-                        // TextButton(
-                        //   onPressed: () {
-
-                        //   },
-                        //   child: Text(
-                        //     'ADD',
-                        //     style: TextStyle(color: Colors.white),
-                        //   ),
-                        //   style: ButtonStyle(
-                        //     animationDuration: Duration(microseconds: 600),
-                        //     backgroundColor:
-                        //         MaterialStateProperty.all(Colors.blue),
-                        //   ),
-                        // )
                       ],
                     ),
                   ),

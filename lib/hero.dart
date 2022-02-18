@@ -43,7 +43,7 @@ class _HeroyState extends State<Heroy> {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => UI()),
               );

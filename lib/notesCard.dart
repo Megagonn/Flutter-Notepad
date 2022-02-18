@@ -63,9 +63,68 @@ class _NotesCardState extends State<NotesCard> {
                   ),
                   trailing: TextButton(
                     onPressed: () {
-                      setState(() {
-                        noteList.removeAt(index);
-                      });
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text(
+                                "DELETE",
+                              ),
+                              content: Text(
+                                  'Are you sure you want to delete this note?'),
+                              backgroundColor: Colors.blueGrey.shade200,
+                              actions: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.red),
+                                        padding: MaterialStateProperty.all(
+                                            EdgeInsets.all(5)),
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          noteList.removeAt(index);
+                                          Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .pop();
+                                          alert(context);
+                                        });
+                                      },
+                                      child: Text('Delete'),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                      child: Text(''),
+                                    ),
+                                    ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.green),
+                                        padding: MaterialStateProperty.all(
+                                            EdgeInsets.all(5)),
+                                      ),
+                                      onPressed: () {
+                                        // noteList.removeAt(index);
+                                        // CloseButton();
+                                        // dispose();
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .pop();
+                                      },
+                                      child: Text('Cancel'),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            );
+                          });
+                      // },
+                      // );
                     },
                     child: Icon(
                       Icons.delete_forever_rounded,
@@ -91,6 +150,16 @@ class _NotesCardState extends State<NotesCard> {
   }
 }
 
+//delete notification
+alert(context) {
+  return ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text('One note is deleted'),
+      duration: Duration(seconds: 5),
+    ),
+  );
+}
+
 class Edit extends StatefulWidget {
   @override
   _EditState createState() => _EditState();
@@ -103,6 +172,7 @@ class _EditState extends State<Edit> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    //for editing
     thisControl.text = noteList[ind][0];
   }
 

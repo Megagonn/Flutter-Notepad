@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notepad/input.dart';
+import 'package:notepad/ui.dart';
 
 import 'colors.dart';
 import 'notesCard.dart';
@@ -109,6 +110,7 @@ class _TabbarState extends State<Tabbar> with TickerProviderStateMixin {
                   onPressed: () {
                     setState(() {
                       noteList.add([note, date]);
+                      filteredList.add([note, date]);
                       myController.clear();
                       alertAddition(context);
                     });

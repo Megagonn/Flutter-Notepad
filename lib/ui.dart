@@ -4,11 +4,16 @@ import 'colors.dart';
 // import 'input.dart';
 import 'tabbar.dart';
 
+List filteredList = [];
+var ind;
+var keyWord;
+
 class UI extends StatelessWidget {
   const UI({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    myContext = context;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: pink,
@@ -43,13 +48,6 @@ class UI extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    // Container(
-                    //   margin: EdgeInsets.symmetric(horizontal: 10),
-                    //   child: Icon(
-                    //     Icons.search,
-                    //     color: grey,
-                    //   ),
-                    // ),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       child: TextField(
@@ -60,40 +58,31 @@ class UI extends StatelessWidget {
                             labelStyle: TextStyle(
                               color: grey,
                             ),
-                            suffixIcon: Icon(
-                              Icons.search_sharp,
-                              color: pink,
+                            suffixIcon: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(pink),
+                              ),
+                              onPressed: () {
+                                SearchFunc.search();
+                              },
+                              child: Icon(
+                                Icons.search_sharp,
+                                color: (Colors.white),
+                              ),
                             ),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: pink)),
                           ),
                           cursorColor: pink,
                           onChanged: (val) {
+                            searchVal = val;
                             for (var i = 0; i < noteList.length; i++) {
-                              if (noteList[i][0].contains('$val')) {
-                                print('found');
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SearchResult(
-                                      data: noteList[i][0],
-                                    ),
-                                  ),
-                                );
-                              } else {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text('Not found'),
-                                      content: Text('Search not found...'),
-                                    );
-                                  },
-                                );
-                              }
+                              searchIndex = i;
                             }
                           }),
                     )
+                    // )
                   ],
                 ),
               ),
@@ -110,11 +99,69 @@ class UI extends StatelessWidget {
   }
 }
 
+int? searchIndex;
+var searchVal;
+var myContext;
+
+class SearchFunc extends StatefulWidget {
+  const SearchFunc({Key? key}) : super(key: key);
+
+  static void search() {
+    // filteredList.clear();
+
+    if (noteList[searchIndex!][0].toString().contains(searchVal)) {
+      filteredList
+          .retainWhere((element) => element[0].toString().contains(searchVal));
+    } else {
+      showDialog(
+        context: myContext,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Not found'),
+            content: Text('Search not found...'),
+          );
+        },
+      );
+    }
+    Navigator.push(
+      myContext,
+      MaterialPageRoute(
+        builder: (context) => SearchResult(
+          data: filteredList,
+        ),
+      ),
+    );
+  }
+
+  @override
+  _SearchFuncState createState() => _SearchFuncState();
+}
+
+class _SearchFuncState extends State<SearchFunc> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+  // ignore: unused_element
+
+}
+
+//global variables & func.
+var myFilteredNoteContent;
+String filteredClipedNote() {
+  if (filteredList[ind][0].length >= 35) {
+    return filteredList[ind][0].substring(0, 35) + "...";
+  } else {
+    return filteredList[ind][0];
+  }
+}
+
 // ignore: must_be_immutable
 class SearchResult extends StatefulWidget {
   // const ({ Key? key }) : super(key: key);
-  late String data;
+  late List data;
   SearchResult({Key? key, required this.data}) : super(key: key);
+
   @override
   _SearchResultState createState() => _SearchResultState();
 }
@@ -128,7 +175,56 @@ class _SearchResultState extends State<SearchResult> {
         title: Text('Search Result'),
         backgroundColor: pink,
       ),
-      // body: ,
+      body: ListView.builder(
+          itemCount: filteredList.length,
+          itemBuilder: (context, index) {
+            ind = index;
+            return Column(
+              children: [
+                ListTile(
+                  title: Text(
+                    filteredClipedNote(),
+                    style: TextStyle(color: Colors.grey.shade800),
+                  ),
+                  focusColor: (Colors.pink.shade500),
+                  tileColor: Colors.pink.shade100,
+                  onTap: () {
+                    myFilteredNoteContent = filteredList[index][0];
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FilteredNoteContent()));
+                  },
+                ),
+                SizedBox(
+                  width: 10,
+                  child: Text(''),
+                ),
+              ],
+            );
+          }),
+    );
+  }
+}
+
+class FilteredNoteContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: pink,
+        title: Text('Note'),
+      ),
+      body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            '$myFilteredNoteContent',
+            style: TextStyle(
+              color: grey,
+              letterSpacing: 1.15,
+              wordSpacing: 1.5,
+            ),
+          )),
     );
   }
 }

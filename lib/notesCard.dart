@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notepad/colors.dart';
 import 'package:notepad/input.dart';
+import 'package:notepad/ui.dart';
 import 'tabbar.dart';
 
 class NotesCard extends StatefulWidget {
@@ -11,7 +12,7 @@ class NotesCard extends StatefulWidget {
 }
 
 String? myNoteContent;
-var ind;
+var ind1;
 
 class _NotesCardState extends State<NotesCard> {
   @override
@@ -25,12 +26,13 @@ class _NotesCardState extends State<NotesCard> {
           // padding: const EdgeInsets.all(8),
           itemCount: noteList.length,
           itemBuilder: (BuildContext context, int index) {
-            ind = index;
+            ind1 = index;
             return Column(
               children: [
                 ListTile(
                   leading: TextButton(
                     onPressed: () {
+                      ind1 = index;
                       setState(() {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => Edit()));
@@ -173,7 +175,7 @@ class _EditState extends State<Edit> {
     // TODO: implement initState
     super.initState();
     //for editing
-    thisControl.text = noteList[ind][0];
+    thisControl.text = noteList[ind1][0];
   }
 
   @override
@@ -182,8 +184,8 @@ class _EditState extends State<Edit> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            noteList.removeAt(ind);
-            noteList.insert(ind, [edited, date]);
+            noteList.removeAt(ind1);
+            noteList.insert(ind1, [edited, date]);
             thisControl.clear();
             Navigator.pop(context);
           });
@@ -225,10 +227,10 @@ class _EditState extends State<Edit> {
 
 //this func clipped the note on the listTile
 String clipedNote() {
-  if (noteList[ind][0].length >= 35) {
-    return noteList[ind][0].substring(0, 35) + "...";
+  if (noteList[ind1][0].length >= 35) {
+    return noteList[ind1][0].substring(0, 35) + "...";
   } else {
-    return noteList[ind][0];
+    return noteList[ind1][0];
   }
 }
 
